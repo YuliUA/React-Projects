@@ -7,13 +7,13 @@ class LogIn extends Component{
             <div className ="container">
                 <form>
                     <div className="form-group row">
-                        <label forName="inputEmail3" className="col-sm-2 col-form-label">Email</label>
+                        <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
                         <div className="col-sm-10">
                         <input type="email" className="form-control" id="inputEmail3" placeholder="Email" />
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label forName="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Password</label>
                         <div className="col-sm-10">
                         <input type="password" className="form-control" id="inputPassword3" placeholder="Password" />
                         </div>

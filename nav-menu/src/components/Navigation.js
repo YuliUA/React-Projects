@@ -12,6 +12,7 @@ class Navigation extends Component{
             currentPage: 'home'
         }
         this.handleChange = this.handleChange.bind(this);
+        this.componentGenerator = this.componentGenerator.bind(this)
     }
 
     handleChange(page){
@@ -20,31 +21,32 @@ class Navigation extends Component{
         });
     }
 
+    componentGenerator (page){
+        let compo;
+        switch(page){
+            case 'Home': 
+                compo = <Jumbo heading = {this.props.heading} text = {this.props.text}/>;
+                break;
+            case 'Registration':
+                compo = <Registr />;
+                break;
+            case 'Sign In':
+                compo = <LogIn />;
+                break;
+            default:
+                compo = '';
+                break;            
+        }
+        return compo;
+    }
+
+
+
     render(){
-        let jumboComponent;
-        if(this.state.currentPage == 'Home'){
-            jumboComponent = <Jumbo heading={this.props.heading} text={this.props.text} />;
-        } else {
-            jumboComponent = '';
-        }
-        let registrComponent;
-        if(this.state.currentPage == 'Registration'){
-            registrComponent = <Registr />
-        } else {
-            registrComponent=''
-        }
-        let logInComponent;
-        if(this.state.currentPage == 'Sign In'){
-            logInComponent = <LogIn />
-        } else {
-            logInComponent =''
-        }
         return(
             <div>
                 <Navbar currentPage={this.state.currentPage} brand={this.props.brand} change={this.handleChange} />
-                {jumboComponent}
-                {registrComponent}
-                {logInComponent}
+                {this.componentGenerator(this.state.currentPage)}
                 <Page currentPage={this.state.currentPage} />
             </div>
         );

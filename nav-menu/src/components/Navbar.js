@@ -24,7 +24,7 @@ class Navbar extends Component{
                     <a onClick={this.change.bind(this,'About')} href="#">About</a></li>
                   <li className={(this.props.currentPage === 'Contact') ? 'active': ''}>
                     <a onClick={this.change.bind(this,'Contact')} href="#">Contact</a></li>
-                  <li className={(this.props.currentPage === 'Rehistration') ? 'active': ''}>
+                  <li className={(this.props.currentPage === 'Registration') ? 'active': ''}>
                     <a onClick={this.change.bind(this,'Registration')} href="#">Registration</a></li>
                   <li className={(this.props.currentPage === 'Sign In') ? 'active': ''}>
                     <a onClick={this.change.bind(this,'Sign In')} href="#">Sign In</a></li>
