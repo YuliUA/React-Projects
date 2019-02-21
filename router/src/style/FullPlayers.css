@@ -1,0 +1,28 @@
+.add-button{
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 20px 35px;
+}
+
+.adding-form{
+    width: 300px;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 99;
+    background-color: white;
+    box-shadow: 0 0 10px lightgrey;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+.adding-form input{
+    height: 30px;
+    font-size: 16px;
+    padding: 5px 20px;
+    margin: 10px 0;
+}
