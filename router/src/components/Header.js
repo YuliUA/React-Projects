@@ -7,7 +7,7 @@ class Header extends Component{
             <header className="header">
                 <nav>
                     <ul>
-                        <li><Link exact to= '/'>Home</Link></li>
+                        <li><Link exact='true' to= '/'>Home</Link></li>
                         <li><Link to= '/players'>Players</Link></li>
                         <li><Link to= '/schedule'>Schedule</Link></li>
                     </ul>
