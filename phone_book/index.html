@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Book</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="content"></div>
+    <script type="text/babel">
+
+        var CONTACTS = [
+            {
+                id: 1,
+                name: 'Darth Vader',
+                phoneNumber: '+2851515894484',
+                image: 'img/darth.gif'
+            }, {
+                id: 2,
+                name: 'Princess Leia',
+                phoneNumber: '+2851500000000',
+                image: 'img/leia.gif'
+            }, {
+                id: 3,
+                name: 'Luke Skywalker',
+                phoneNumber: '+2851515666666',
+                image: 'img/luke.gif'
+            }, {
+                id: 4,
+                name: 'Chewbacca',
+                phoneNumber: '+2859999999484',
+                image: 'img/chewbacca.gif'
+            }
+        ];
+        var Contact = React.createClass({
+            deleteContact: function(e){
+                this.props.deleteContact(e.target.id)
+            },
+            editContact: function(e){
+                this.props.editContact(e.target.id)
+                // console.log(e.target.id)
+            },
+
+            render: function(){
+                return(
+                    <li className="contact" key={this.props.id}>
+                        <img className="contact-image" src={this.props.image} width="60px" height="60px"/>
+                        <div className="contact-info">
+                            <div className="contact-name"> {this.props.name} </div>
+                            <div className="contact-number"> {this.props.phoneNumber} </div>
+                            <a href="#" className="contact-edit" id={this.props.name} onClick={this.editContact}>Edit</a>
+                            <a href="#" className="contact-delete" id={this.props.id} onClick={this.deleteContact}>Delete</a>
+                        </div>
+                    </li>
+                )
+            }
+        })
+
+        var ContactsList = React.createClass({
+            //змінні які використовують функції
+            getInitialState: function () {
+                return {
+                displayedContacts: CONTACTS,
+                editedContact: '',
+                index: '',
+                id:'',
+                name: '',
+                phoneNumber: '',
+                image: 'img/newcontact.png',
+                editable: false
+                };
+            },
+            //функція, яка очищає текстові поля
+            reset: function(){
+                document.querySelector('#name').value=''
+                document.querySelector('#phoneNumber').value=''
+            },
+            //При кліку додаємо новий контакт
+            handleAdd: function(e){
+                e.preventDefault()
+                let newContact ={}
+                newContact.id = Math.random()
+                newContact.name= this.state.name
+                newContact.phoneNumber = this.state.phoneNumber
+                newContact.image =this.state.image
+                // let contacts=this.state.displayedContacts;
+                CONTACTS.push(newContact)
+                this.setState({
+                    displayedContacts:CONTACTS
+                },()=>console.log(this.state));
+            },
+            //Ф-ція що додає контакт і очищає поля
+            addClick:function(e){
+                this.handleAdd(e);
+                this.reset();
+            },
+            //Змінюємо значення змінних через введення нових в інпут полях
+            onChangeInput: function(e){
+                let id=e.target.id
+                let newContactInfo = {}
+                newContactInfo[id]=e.target.value
+                this.setState(newContactInfo)
+            },
+            // Пошук за іменем контакта(фільтр)
+            handleSearch: function(event){
+                var searchQuery = event.target.value.toLowerCase();
+                var displayedContacts = CONTACTS.filter(function(el){
+                    var searchValue = el.name.toLowerCase();
+                    return searchValue.indexOf(searchQuery) !== -1;
+                });
+                console.log(displayedContacts)
+                console.log(CONTACTS)
+                this.setState({
+                    displayedContacts: displayedContacts
+                });
+            },
+            //Видалення контакту при кліку на його Delete
+            deleteHandle: function(e){
+                let contacts = this.state.displayedContacts
+                contacts=contacts.filter(cont => cont.id.toString() !== e)
+                this.setState({
+                    displayedContacts: contacts
+                })
+            },
+            //Редагування контакту при кліку на Edit
+            //Запис данич у відповідні поля форми для редагування
+            editHandle:function(e){
+                let allContacts = this.state.displayedContacts
+                let contactId=e
+                // console.log(e)
+                let editedContact = allContacts.find(function(el){
+                    return el.name === contactId
+                })
+                let index = allContacts.indexOf(editedContact)
+                let editName=editedContact.name
+                let editPhone=editedContact.phoneNumber
+                let editId = editedContact.id
+                document.querySelector('#name').value=editName
+                document.querySelector('#phoneNumber').value=editPhone
+                this.setState({
+                    editedContact: editedContact,
+                    id: editId,
+                    name: editName,
+                    phoneNumber: editPhone,
+                    index: index,
+                    editable: true
+                })
+            },
+            //Клік на кнопку EditContact
+            //Всі зміни перезаписуємо у відповідному обєкті і повертаємо 
+            //його на ту саму позицію з якої його було взято при Edit
+            returnEdittedContact: function(){
+                let allContacts=this.state.displayedContacts
+                let i = +this.state.index
+                let newObj = {}
+                newObj.id = this.state.id
+                newObj.name=this.state.name
+                newObj.phoneNumber=this.state.phoneNumber
+                newObj.image = allContacts[i].image
+                allContacts.splice(i, 1, newObj)
+                this.setState({
+                    displayedContacts:allContacts,
+                    editable: false
+                })
+            },
+            
+            editClick:function(){
+                this.returnEdittedContact();
+                this.reset();
+            },
+
+            render: function () {
+                let shown = {display: this.state.editable ? 'none' : 'block' };
+                let hide = {display: this.state.editable ? 'block' : 'none'};
+                return (
+                    <div className="contacts">
+                        <form action="" name="addForm">
+                            <img src="img/contact-icon.jpg" alt="new contact" width="160px" height="160px" />
+                            <p>Contact name:</p>
+                            <input type="text" id="name"  className="search-field" placeholder="Contact name..." onChange={this.onChangeInput}/>
+                            <p>Contact phone:</p>
+                            <input type="text" id="phoneNumber" className="search-field" placeholder="+380..." onChange={this.onChangeInput}/>
+                            <div >  
+                                    <input type="button" value="Add contact" className="add-contact-link prime" style = {shown} onClick={this.addClick}/>
+                                    <input type="button" value="Edit contact" className="add-contact-link edit" style = {hide} onClick={this.editClick}/>
+                            </div>
+                        </form>
+                        <div className="container">
+                            <input type="text" placeholder="Search..." className="search-field" onChange={this.handleSearch}/>
+                            <ul className="contacts-list">
+                                {
+                                    this.state.displayedContacts.map((el)=>{
+                                    //повертає компоненту контакт у циклі 
+                                    //для відображення усіх обєктів масиву
+                                        return ( <Contact 
+                                                id = {el.id}
+                                                key = {el.id}
+                                                name={el.name}
+                                                phoneNumber={el.phoneNumber}
+                                                image = {el.image}
+                                                deleteContact = {this.deleteHandle}
+                                                editContact = {this.editHandle}
+                                            />
+                                        
+                                        );
+                                    })
+                                }
+                            </ul>
+                        </div> 
+                    </div>
+                );
+            }
+        });
+
+
+//Відображення на сторінці браузера
+        ReactDOM.render(
+            <ContactsList />,
+            document.getElementById("content")
+        );
+        </script>
+</body>
+
+</html>
