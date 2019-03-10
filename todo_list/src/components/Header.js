@@ -15,8 +15,8 @@ class Header extends Component{
     }
     render(){
         return(
-            <div>
-                <h1>TODO's List</h1>
+            <div id='heading' className='box'> 
+                <h1 >TODO's List</h1>
                 <h2> {this.setDate()} </h2>
             </div>
         )

@@ -8,13 +8,11 @@ class App extends Component{
         return (
             <div>
                 <Header/>
-                <EnterField />
                 <TaskList />
+                <EnterField />
             </div>
         )
     }
 }
-
-
 
 export default App;

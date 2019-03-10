@@ -5,8 +5,8 @@ class EnterField extends Component{
     render(){
         return(
             <form>
-                <input type="text" onChange={this.props.changeTask} value={this.props.newTask} placeholder="Enter next task..."/>
-                <input type="button" value="+" onClick={this.props.addTask}/>
+                <input type="text" onChange={this.props.changeTask} value={this.props.task} placeholder="Enter next task..."/>
+                <button type="button" value="+" onClick={this.props.addTask}>+</button>
             </form>
         )
     }
