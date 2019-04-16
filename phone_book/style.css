@@ -1,0 +1,115 @@
+#content{
+  margin: 50px;
+}
+
+.flex-display {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.prime{
+  background-color: #5893d4;
+}
+.prime:hover, .edit:hover{
+  background-color: #1f3c88;
+  box-shadow: inset 0 0 10px #5893d4, 0 0 5px #888888
+}
+
+.edit{
+  background-color: #ceddef;
+}
+
+
+a {
+  text-decoration: none;
+  padding-right: 20px
+}
+
+form {
+  width: 300px;
+  margin-right: 70px;
+}
+.contacts{
+  width: 100%;
+  display: flex;
+  /* flex-direction: row-reverse; */
+  justify-content: center;
+}
+.search-field {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.contacts-list {
+  padding: 0;
+  width: 100%;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  width: 100%;
+  padding: 5px;
+  border-bottom: 1px dotted grey;
+}
+
+.container{
+  margin-top: 30px
+}
+.contact-image {
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.contact-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.contact-number {
+  font-size: 18px;
+  color: grey;
+}
+
+.contact-edit {
+  color: lightblue
+}
+
+.contact-delete {
+  color: lightpink
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif
+}
+
+form img {
+  display: block;
+  margin: 0 auto;
+}
+
+form input[type=button] {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin: 10px auto;
+  padding: 10px 50px;
+  border-radius: 5px
+}
+.reset-value{
+  width: 150px;
+  height: 30px;
+  background-color: rgb(175, 91, 91);
+  border-radius: 5px;
+  color: snow;
+  margin: 20px auto
+  
+}
+.reset-value:hover{
+  background-color: red
+}
